@@ -1,0 +1,14 @@
+.header-home  {
+text-align: center;
+
+}
+.header-home a {
+    color: darkslategray;
+}
+
+.footer {
+	text-align: right;
+	color: #F1C40F;
+	
+	width: 100%;
+}
