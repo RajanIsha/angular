@@ -22,12 +22,10 @@
 	text-align: left;
 	color: #4A235A;
 	text-decoration: underline;
- 	position: absolute;
     	top: 80px;
 }
 
 .main_info {
-	position: absolute;
     	top: 150px;
 }
 
