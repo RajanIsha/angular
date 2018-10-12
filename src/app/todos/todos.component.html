@@ -1,0 +1,28 @@
+<div class="todos-content">
+    <h2>TODOS</h2>
+    <div class="todos-data">
+      <div class="todos-error">
+          
+        <label>{{errorMsg}}</label>
+      </div>
+      <div class="todos-input-data">
+        <div>
+          <input type="text" #inputData placeholder="Enter ur text" />
+          <button (click)="addToDataArray(inputData.value)">+</button>
+        </div>
+      </div>
+      <div class="todos-data-list">
+        <table>
+          <tr *ngFor='let data of dataArray'>
+            <td>
+                {{data.message}}
+            </td>
+            <td>
+              <button (click)="removeMessage(data)">X</button>
+            </td>
+          </tr>
+        </table>
+        
+      </div>
+    </div>
+  </div>
