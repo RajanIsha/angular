@@ -10,3 +10,13 @@
     border-radius: 10px;
 }
 
+.input_tag {
+	border-style: none;
+    background-color: #eeeeee;
+}
+
+.todos-error{
+    color: red;
+}
+
+

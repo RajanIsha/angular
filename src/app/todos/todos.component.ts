@@ -9,11 +9,13 @@ export class TodosComponent implements OnInit {
 
   dataArray : Array<Message>;
   errorMsg : String;
-  inputData : String;
+  isErrorMessageClosed : boolean;
+  enableCheckMsg : String;
   constructor() {
     this.dataArray = [];
     this.errorMsg = '';
-    this.inputData = '';
+    this.isErrorMessageClosed = false;
+    this.enableCheckMsg = '';
    }
 
   ngOnInit() {
@@ -22,13 +24,15 @@ export class TodosComponent implements OnInit {
   
   addToDataArray(value) {
    if(value.length > 0) {
-    let data = new Message(value, (this.dataArray.length + 1));
+    let data = new Message(value, (this.dataArray.length + 1), false, false);
     this.dataArray.push(data);
     this.errorMsg = '';
-    this.inputData  = '';
+    this.enableCheckMsg = '';
    } else {
      this.errorMsg = "String should not be EMPTY";
-   }      
+     this.isErrorMessageClosed = true;
+   } 
+     
   }
 
   removeMessage(removeData) {
@@ -36,14 +40,43 @@ export class TodosComponent implements OnInit {
     this.dataArray.splice(index,1);
   }
 
+  enableEdit(data) {
+    if(data.isChecked == true) {
+      data.isEdit = true;
+      this.enableCheckMsg = '';
+    }     
+  }
+
+  updateData(id, value) {
+    for(let i=0; i<this.dataArray.length; i++) {
+      if(this.dataArray[i].id == id) {
+        this.dataArray[i].message = value;
+        this.dataArray[i].isEdit = false;
+        this.dataArray[i].isChecked = false;
+      }
+    }
+    
+  }
+
+  closeErrorMessage() {
+    this.errorMsg = '';
+    this.isErrorMessageClosed = false;
+
+  }
+
 }
 
 export class Message {
   message: string;
   id: number;
+  isEdit: boolean;
+  isChecked: boolean;
 
-  constructor(message,id){
+  constructor(message,id, isEdit, isChecked){
       this.message = message;
       this.id = id;
+      this.isEdit = isEdit;
+      this.isChecked = isChecked;
   }
 }
+
