@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TodoService } from './todo.services';
 
 @Component({
   selector: 'app-todos',
@@ -11,21 +12,76 @@ export class TodosComponent implements OnInit {
   errorMsg : String;
   isErrorMessageClosed : boolean;
   enableCheckMsg : String;
-  constructor() {
+  constructor(
+    private todoService : TodoService
+  ) {
     this.dataArray = [];
     this.errorMsg = '';
     this.isErrorMessageClosed = false;
     this.enableCheckMsg = '';
    }
 
-  ngOnInit() {
+  getTodos(){
+   this.todoService.getAllTodos().subscribe(
+     data => {
+        this.dataArray = data.todos;
+     },
+     err => {
+
+     }
+   ) 
   }
+
+  addTodo(value){
+    let body = {
+      "title":value,
+      "completed":false,
+      "username":" Rajan",
+      "createDate": Date.now()
+    }
+
+    this.todoService.addTodo(body).subscribe(
+      data => {
+        this.getTodos();
+      },
+      err => {
  
-  
+      }
+    ) 
+
+  }
+    updateTodo(id, value, v)
+    {
+      let body = {
+        "completed":true,
+        "_id": id,
+        "__v": v,
+        "title":value,
+        "username": "Rajan",
+        "modifiedAt":Date.now(),
+        createdAt:Date.now(),
+      }
+      this.todoService.updateTodo(body).subscribe(
+        data => {
+          this.getTodos();
+        },
+        err => {
+   
+        }
+      ) 
+      }
+
+  ngOnInit() {
+    this.getTodos();
+  }
+   
   addToDataArray(value) {
    if(value.length > 0) {
     let data = new Message(value, (this.dataArray.length + 1), false, false);
     this.dataArray.push(data);
+
+    this.addTodo(value);
+
     this.errorMsg = '';
     this.enableCheckMsg = '';
    } else {
@@ -35,9 +91,12 @@ export class TodosComponent implements OnInit {
      
   }
 
-  removeMessage(removeData) {
-    let index = this.dataArray.indexOf(removeData);
-    this.dataArray.splice(index,1);
+  removeMessage(todo, i) {
+    this.todoService.deleteTodo(todo._id).subscribe( data => {
+      if (data.success) {
+        this.getTodos();
+      }
+    }) 
   }
 
   enableEdit(data) {
@@ -50,7 +109,7 @@ export class TodosComponent implements OnInit {
   updateData(id, value) {
     for(let i=0; i<this.dataArray.length; i++) {
       if(this.dataArray[i].id == id) {
-        this.dataArray[i].message = value;
+        this.dataArray[i].title = value;
         this.dataArray[i].isEdit = false;
         this.dataArray[i].isChecked = false;
       }
@@ -67,13 +126,13 @@ export class TodosComponent implements OnInit {
 }
 
 export class Message {
-  message: string;
   id: number;
   isEdit: boolean;
   isChecked: boolean;
+  title : string;
 
-  constructor(message,id, isEdit, isChecked){
-      this.message = message;
+  constructor(title,id, isEdit, isChecked){
+      this.title = title;
       this.id = id;
       this.isEdit = isEdit;
       this.isChecked = isChecked;
