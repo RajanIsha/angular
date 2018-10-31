@@ -50,10 +50,10 @@ export class TodosComponent implements OnInit {
     ) 
 
   }
-    updateTodo(id, value, v)
+    updateTodo(id, value, v,complete)
     {
       let body = {
-        "completed":true,
+        "completed":complete,
         "_id": id,
         "__v": v,
         "title":value,
@@ -100,10 +100,10 @@ export class TodosComponent implements OnInit {
   }
 
   enableEdit(data) {
-    if(data.isChecked == true) {
+    //if(data.isChecked == true) {
       data.isEdit = true;
       this.enableCheckMsg = '';
-    }     
+    //}     
   }
 
   updateData(id, value) {

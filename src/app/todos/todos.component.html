@@ -19,13 +19,15 @@
                 <tbody>
                     <tr *ngFor='let todo of dataArray; index as i'>
                         <td width="25%">
-                            <input type="checkbox" [(ngModel)]="todo.isChecked" checked="{{todo.isChecked ? 'checked' : '' }}" />
+                            <!-- <input type="checkbox" [(ngModel)]="todo.isChecked" checked="{{todo.isChecked ? 'checked' : '' }}" /> -->
+                            <input type="checkbox" [(ngModel)]="todo.completed" checked="{{todo.completed ? 'checked' : '' }}"  (change)="updateTodo(todo._id, todo.title, todo.__v,todo.completed) "  />
                         </td>
                         <td width="50%" style="text-align: center;">
                             <div>
-                                <input type="text" class="input_tag" value="{{todo.title}}" *ngIf=!todo.isEdit (click)=enableEdit(todo) readonly />
-                                <input type="text" [(ngModel)]="todo.title" *ngIf="todo.isChecked && todo.isEdit" />
-                                <button (click)="updateTodo(todo._id, todo.title, todo.__v)" *ngIf="todo.isChecked && todo.isEdit">save</button>
+                                <!-- <input type="text" class="input_tag" value="{{todo.title}}" *ngIf=!todo.isEdit (click)="enableEdit(todo)" readonly /> -->
+                                <span class="input_tag"*ngIf="!todo.isEdit" (click)="enableEdit(todo)" > {{todo.title}} <i class="fa fa-cog fa-spin"></i> </span>
+                                <input type="text" [(ngModel)]="todo.title" *ngIf="todo.isEdit" />
+                                <button (click)="updateTodo(todo._id, todo.title, todo.__v)" *ngIf="todo.isEdit">save</button>
 
                             </div>
                         </td>
