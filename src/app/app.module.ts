@@ -12,13 +12,15 @@ import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { TodosComponent } from './todos/todos.component';
 import { TodoService } from './todos/todo.services';
+import { StopwatchComponent } from './stopwatch/stopwatch.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AboutComponent,
     HomeComponent,
-    TodosComponent
+    TodosComponent,
+    StopwatchComponent
   ],
   imports: [
     BrowserModule,

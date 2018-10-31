@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { TodosComponent } from './todos/todos.component';
+import { StopwatchComponent } from './stopwatch/stopwatch.component';
+
 
 const routes: Routes = [
     { path:  '', redirectTo:  'home', pathMatch:  'full' },
@@ -23,6 +25,10 @@ const routes: Routes = [
     {
         path: 'todos',
         component: TodosComponent
+    },
+    {
+        path: 'stopwatch',
+        component: StopwatchComponent
     }
 ];
 
